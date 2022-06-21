@@ -9,4 +9,4 @@ viber = Api(BotConfiguration(
     auth_token=TOKEN
 ))
 
-viber.set_webhook('ссылка на ваш сервер с ботом')
+viber.set_webhook('http://glsarsen.pythonanywhere.com/')
