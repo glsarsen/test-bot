@@ -20,7 +20,7 @@ app = Flask(__name__)
 
 bot_configuration = BotConfiguration(
     name="Test_Bot",
-    avatar="http://viber.com/avatar.jpg",
+    avatar="",
     auth_token=TOKEN
 )
 viber = Api(bot_configuration)
@@ -54,4 +54,4 @@ def incoming():
 
 if __name__ == "__main__":
     context = ("server.crt", "server.key")
-    app.run(host="0.0.0.0", port=443, debug=True, ssl_context=context)
+    app.run(host="http://glsarsen.pythonanywhere.com/", port=443, debug=True, ssl_context=context)
