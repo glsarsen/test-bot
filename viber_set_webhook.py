@@ -1,10 +1,12 @@
 from viberbot import Api
 from viberbot.api.bot_configuration import BotConfiguration
 
+TOKEN = "4f5c605073e7e741-801386ee70f8470d-dd779006e2e4d2b8"
+
 viber = Api(BotConfiguration(
     name='PythonSampleBot',
     avatar='http://site.com/avatar.jpg',
-    auth_token='445da6az1s345z78-dazcczb2542zv51a-e0vc5fva17480im9'
+    auth_token=TOKEN
 ))
 
 viber.set_webhook('ссылка на ваш сервер с ботом')
