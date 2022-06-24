@@ -1,4 +1,3 @@
-from email import message
 from flask import Flask, request, Response
 from viberbot import Api
 from viberbot.api.bot_configuration import BotConfiguration
@@ -33,7 +32,7 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 
-@app.route("/incoming", methods=["POST"])
+@app.route("/", methods=["POST"])
 def incoming():
     logger.debug(f"recieved request. post data: {request.get_data()}")
     if not viber.verify_signature(request.get_data(), request.headers.get("X-Viber-Content-Signature")):
@@ -44,14 +43,18 @@ def incoming():
     if isinstance(viber_request, ViberMessageRequest):
         message = viber_request.message
         viber.send_messages(viber_request.sender.id, [message])
-    elif isinstance(viber_request, ViberSubscribedRequest):
+
+    if isinstance(viber_request, ViberSubscribedRequest):
         viber.send_messages(viber_request.get_user.id, [TextMessage(text="Thanks for subscribing!")])
-    elif isinstance(viber_request, ViberFailedRequest):
+
+    if isinstance(viber_request, ViberFailedRequest):
         logger.warn(f"Client failed receiving message. failure: {viber_request}")
+
+    if isinstance(viber_request, ViberConversationStartedRequest):
+        viber.send_messages(viber_request.user.id, [TextMessage(text="Greetings, user!")])
 
     return Response(status=200)
 
 
 if __name__ == "__main__":
-    context = ("server.crt", "server.key")
-    app.run(host="0.0.0.0", port=443, debug=True, ssl_context=context)
+    app.run(host="localhost", port=8087, debug=True)
